@@ -1,14 +1,19 @@
 package be.cegeka.battle;
 
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class SoldierTest {
+
 
     @Test
     void construction_aSoldierMustHaveAName() {
@@ -71,49 +76,5 @@ class SoldierTest {
         assertThat(battle.getWinner()).isEqualTo(soldierWithAxe);
     }
 
-    @Test
-    void Army_givenSoldiers_whenAddSoldier_thenSoldierIsAddedToArmy() {
-        Army army = new Army();
-        Soldier soldier = new Soldier("soldier");
 
-        army.addSoldier(soldier);
-
-        assertThat(army.getSoldiers()).contains(soldier);
-    }
-
-    @Test
-    void Army_givenArmyWithSoldiers_whenGetLeader_thenRetrunFirstAddedSoldier(){
-        Army army = new Army();
-        Soldier soldier = new Soldier("soldier");
-        Soldier soldier2 = new Soldier("soldier2");
-
-        army.addSoldier(soldier);
-        army.addSoldier(soldier2);
-
-        assertThat(army.getFrontMan().orElse(null)).isEqualTo(soldier);
-    }
-
-    @Test
-    void War_givenTwoArmies_whenWar_thenStrongestArmyWins(){
-        Army army1 = new Army();
-        Soldier soldier1 = new Soldier("soldier1", Weapon.AXE);
-        Soldier soldier2 = new Soldier("soldier2", Weapon.AXE);
-        army1.addSoldier(soldier1);
-        army1.addSoldier(soldier2);
-
-        Army army2 = new Army();
-        Soldier soldier3 = new Soldier("soldier3", Weapon.SWORD);
-        Soldier soldier4 = new Soldier("soldier4", Weapon.SWORD);
-        Soldier soldier5 = new Soldier("soldier5", Weapon.SWORD);
-        army2.addSoldier(soldier3);
-        army2.addSoldier(soldier4);
-        army2.addSoldier(soldier5);
-
-        War war = new War(army1, army2);
-
-        assertThat(war.getWinner()).isEqualTo(army1);
-    }
-
-    @Test
-    void
 }

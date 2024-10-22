@@ -6,12 +6,17 @@ import java.util.Optional;
 
 public class Army {
     private List<Soldier> soldiers = new ArrayList<>();
+    private IHeadQuarters hq;
 
-    public Army() {
+    public Army(IHeadQuarters hq) {
         this.soldiers = new ArrayList<>();
+        this.hq = hq;
     }
 
     public void addSoldier(Soldier soldier) {
+        int soldierId = hq.ReportEnlistment(soldier.getName());
+
+        soldier.setId(soldierId);
         this.soldiers.add(soldier);
     }
 
@@ -27,12 +32,18 @@ public class Army {
     }
 
     public void removeFrontMan() {
+        hq.ReportCasualty(this.soldiers.getFirst().getId().orElseThrow(IllegalStateException::new));
         if (!this.soldiers.isEmpty()) {
             this.soldiers.removeFirst();
         }
+
     }
 
     public boolean isDefeated() {
         return this.soldiers.isEmpty();
+    }
+
+    public void reportVictory() {
+        hq.ReportVictory(this.soldiers.size());
     }
 }

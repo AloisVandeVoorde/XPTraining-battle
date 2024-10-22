@@ -1,12 +1,13 @@
 package be.cegeka.battle;
-
-
 import com.google.common.base.Strings;
+
+import java.util.Optional;
 
 public class Soldier {
 
     private final String name;
     private final Weapon weapon;
+    private Integer Id = null;
 
     public Soldier(String name) {
         this(name, Weapon.BARE_FISTS);
@@ -26,5 +27,13 @@ public class Soldier {
 
     public Weapon getWeapon() {
         return this.weapon;
+    }
+
+    public void setId(int soldierId) {
+        this.Id = soldierId;
+    }
+
+    public Optional<Integer> getId() {
+        return Optional.ofNullable(this.Id);
     }
 }
