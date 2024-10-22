@@ -36,4 +36,17 @@ class SoldierTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @Test
+    void Soldier_givenSoldier_whenGetWeapon_thenReturnBareFists(){
+        Soldier soldier = new Soldier("name");
+
+        assertThat(soldier.getWeapon()).isEqualTo(Weapon.BARE_FISTS);
+    }
+
+    @Test
+    void Soldier_givenSoldierWithWeapon_whenGetWeapon_thenReturnWeapon() {
+        Soldier soldier = new Soldier("name", Weapon.AXE);
+
+        assertThat(soldier.getWeapon()).isEqualTo(Weapon.AXE);
+    }
 }
