@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SoldierTest {
 
@@ -48,5 +50,24 @@ class SoldierTest {
         Soldier soldier = new Soldier("name", Weapon.AXE);
 
         assertThat(soldier.getWeapon()).isEqualTo(Weapon.AXE);
+    }
+
+    @Test
+    void Soldier_givenSoldiersWithDifferentWeapons_whenSoldierAttacks_thenTheOneWithTheStrongestWeaponWins() {
+        Soldier soldierWithAxe = new Soldier("soldierWithAxe", Weapon.AXE);
+        Soldier soldierWithSword = new Soldier("soldierWithSword", Weapon.SWORD);
+        BattleService battle = new BattleService(soldierWithSword,soldierWithAxe);
+
+        assertThat(battle.getWinner()).isEqualTo(soldierWithAxe);
+    }
+
+    @Test
+    void Soldier_givenSoldiersWithSameWeapons_whenSoldierAttacks_thenTheOneThatAttacksWins() {
+        Soldier soldierWithAxe = new Soldier("soldierWithAxe", Weapon.AXE);
+        Soldier soldierWithAxe2 = new Soldier("soldierWithAxe2", Weapon.AXE);
+
+        BattleService battle = new BattleService(soldierWithAxe,soldierWithAxe2);
+
+        assertThat(battle.getWinner()).isEqualTo(soldierWithAxe);
     }
 }
