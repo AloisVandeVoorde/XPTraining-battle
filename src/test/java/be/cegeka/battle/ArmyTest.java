@@ -57,8 +57,9 @@ public class ArmyTest {
         army2.addSoldier(soldier5);
 
         War war = new War(army1, army2);
+        war.fight();
 
-        assertThat(war.fight()).isEqualTo(army1);
+        assertThat(war.getWinner()).isEqualTo(army1);
     }
 
     @Test
@@ -75,8 +76,6 @@ public class ArmyTest {
 
     @Test
     void HQ_givenArmyInWar_whenVictory_thenReportVictory(){
-
-
         Soldier soldier2 = new Soldier("soldier", Weapon.AXE);
         when(hq.ReportEnlistment(soldier2.getName())).thenReturn(2);
         Army army2 = new Army(hq);

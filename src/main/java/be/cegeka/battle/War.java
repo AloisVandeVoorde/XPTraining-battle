@@ -1,6 +1,7 @@
 package be.cegeka.battle;
 
 public class War {
+    private Army winner;
     private final Army attacker;
     private final Army defender;
 
@@ -9,28 +10,30 @@ public class War {
         this.defender = defender;
     }
 
-    public Army fight() {
+    public void fight() {
         while (!attacker.isDefeated() && !defender.isDefeated()) {
             fightRound();
         }
 
-        return getWinner();
+        this.winner = attacker.isDefeated() ? defender : attacker;
+        this.winner.reportVictory();
     }
 
-    private Army getWinner() {
-        if (attacker.isDefeated()) {
-            defender.reportVictory();
-            return defender;
+    public Army getWinner() {
+        if (this.winner == null) {
+            throw new IllegalStateException("War has not been fought yet");
         }
-        attacker.reportVictory();
-        return attacker;
+        return this.winner;
     }
 
     private void fightRound() {
         Soldier soldier1 = attacker.getFrontMan().orElseThrow(IllegalStateException::new);
         Soldier soldier2 = defender.getFrontMan().orElseThrow(IllegalStateException::new);
 
-        Soldier winner = new BattleService(soldier1, soldier2).getWinner();
+        Battle battle = new Battle(soldier1, soldier2);
+        battle.fight();
+
+        Soldier winner = battle.getWinner();
         if (winner.equals(soldier1)) {
             defender.removeFrontMan();
         } else {
