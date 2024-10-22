@@ -113,4 +113,7 @@ class SoldierTest {
 
         assertThat(war.getWinner()).isEqualTo(army1);
     }
+
+    @Test
+    void
 }
