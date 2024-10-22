@@ -14,9 +14,14 @@ public class Battle {
         Weapon attackerWeapon = attacker.getWeapon();
         Weapon defenderWeapon = defender.getWeapon();
 
+        int effectiveDamage = 0;
+        if (attackerWeapon.getEffectiveAgainst().isPresent() && attackerWeapon.getEffectiveAgainst().get() == defenderWeapon) {
+            effectiveDamage = 3;
+        }
+
         if (
             attackerWeapon == defenderWeapon ||
-            (attackerWeapon.getDamage(defenderWeapon) > defenderWeapon.getDamage(attackerWeapon))
+            (attackerWeapon.getDamage(defenderWeapon) + effectiveDamage > defenderWeapon.getDamage(attackerWeapon))
         ) {
             this.winner = attacker;
         } else {
